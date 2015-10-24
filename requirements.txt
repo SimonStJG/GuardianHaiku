@@ -1,0 +1,4 @@
+lxml
+requests
+unidecode
+-e git+https://github.com/SimonStJG/HaikuFinder@master#egg=haiku-finder
