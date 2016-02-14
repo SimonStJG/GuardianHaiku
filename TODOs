@@ -1,0 +1,5 @@
+Add coverage
+hyphenation bug?
+
+        # Work around hyphenation bug
+        text = [paragraph.replace("-", ",") for paragraph in text]

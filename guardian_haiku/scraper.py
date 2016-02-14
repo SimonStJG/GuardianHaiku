@@ -12,9 +12,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-def get_article_urls():
+def get_article_urls(rss_feed_url):
     """Get all of the article urls of all articles on the guardian RSS feed."""
-    raw_xml = requests.get("http://www.theguardian.com/uk/rss").text
+    raw_xml = requests.get(rss_feed_url).text
     # Bizarrely, etree.fromstring doesn't actually operate on strings, so we
     # must encode raw_xml, only to immediately decode it afterwards,
     tree = etree.fromstring(raw_xml.encode(encoding="utf-8"),

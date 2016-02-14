@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from guardian_haiku.guardian_haiku import Config
 from guardian_haiku.scraper import extract_full_text, get_article_urls
 
 
@@ -18,5 +19,5 @@ class TestFunctional(object):
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls()
+        urls = get_article_urls(rss_feed_url=Config.DEFAULT_RSS_FEED_URL)
         assert len(urls) > 10
