@@ -8,6 +8,7 @@ import logging
 from haikufinder import HaikuFinder
 from recorder import Recorder
 from scraper import extract_full_text, get_article_urls
+from functools import reduce
 
 LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
 

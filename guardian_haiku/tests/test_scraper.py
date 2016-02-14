@@ -12,8 +12,8 @@ class TestFunctional(object):
                                       "cold-war-amid-syria-accusations-munich")
         assert (full_text[0] ==
                 "The Russian prime minister has said the world is slipping "
-                "into a \"new cold war\" after European leaders condemned "
-                "his country's airstrikes on Syria and called on Vladimir "
+                "into a \u201cnew cold war\u201d after European leaders condemned "
+                "his country\u2019s airstrikes on Syria and called on Vladimir "
                 "Putin to end them as a precursor for peace negotiations.")
 
     def test_get_article_urls(self):
