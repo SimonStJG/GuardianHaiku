@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from guardian_haiku.guardian_haiku import main
 import tempfile
 

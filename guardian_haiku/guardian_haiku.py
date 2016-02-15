@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-
 """
 Get haiku from the guardian website
 """
 import datetime
 import logging
-from functools import reduce
 import os
 
 from .scraper import extract_full_text, get_article_urls
+from .utils import flatten
 
 
 class Config(object):
@@ -59,11 +58,6 @@ def setup_logging(log_dir_root, logfile_suffix):
     formatter = logging.Formatter(Config.LOG_FORMAT)
     console.setFormatter(formatter)
     logging.getLogger(__name__).addHandler(console)
-
-
-def flatten(l):
-    """I know this isn't pythonic, but I don't care."""
-    return reduce(lambda x, xs: x + xs, l, [])
 
 
 def main(log_dir_root=Config.LOG_DIR_ROOT,

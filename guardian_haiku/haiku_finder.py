@@ -4,7 +4,9 @@ Use nltk to find haiku in text.
 """
 import nltk
 import logging
-from functools import reduce, lru_cache
+from functools import lru_cache
+
+from .utils import flatten
 
 logger = logging.getLogger(__name__)
 
@@ -133,10 +135,6 @@ class Word(object):
 
 def is_vowel_sound(syllable):
     return syllable[-1] in map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
-
-
-def flatten(list):
-    return reduce(lambda x, xs: x + xs, list, [])
 
 
 class WordNotFoundException(Exception):

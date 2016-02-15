@@ -58,13 +58,12 @@ def test_unknown_word_is_ignored_at_end():
     assert HaikuFinder().find_haiku(HAIKU + UNKNOWN_WORD) == [HAIKU]
 
 
-@pytest.mark.xfail
 def test_unknown_word_triggers_callback():
     argument_captor = []
 
     def callback(word):
         logger.debug("Captured")
-        locals()["argument_captor"] += [word]
+        argument_captor.append(word)
 
     hf = HaikuFinder(custom_dictionary=None,
                      unknown_word_callback=callback)
