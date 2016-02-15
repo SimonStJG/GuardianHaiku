@@ -16,7 +16,8 @@ setup(
     install_requires=[
         'lxml',
         'requests',
-        'unidecode'
+        'unidecode',
+        'nltk'
     ],
     setup_requires=[
         'pytest-runner',

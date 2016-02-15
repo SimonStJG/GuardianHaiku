@@ -1,5 +1,5 @@
 Guardian Haiku
-##############
+==============
 
 Eventually this will extract haiku from the guardian website, it's a work in 
 progress.
