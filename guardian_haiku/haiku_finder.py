@@ -14,7 +14,7 @@ try:
     cmu_dictionary = nltk.corpus.cmudict.dict()
 except LookupError:
     if not nltk.download("cmudict"):
-        raise Exception("Failed to download cmudict")
+        raise IOError("Failed to download cmudict")
     cmu_dictionary = nltk.corpus.cmudict.dict()
 
 PUNCTUATION = [".", "!", "(", ")", ":", ",", "?", ";", " -"]

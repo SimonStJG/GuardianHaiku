@@ -23,10 +23,14 @@ def find_haiku(guardian_url):
     """Get haiku at URL"""
     logger.info("Processing {}".format(guardian_url))
 
-    text = extract_full_text(guardian_url)
-    logger.debug("Found full text: {}".format(text))
+    full_text = extract_full_text(guardian_url)
+    logger.debug("Found full text: {}".format(full_text))
 
-    return "TODO flesh out this part"
+    # haiku = HaikuFinder().find_haiku(full_text)
+    # logger.info("Found Haiku: {}".format(haiku))
+
+    # TODO Flesh out this bit!
+    return ["This is not yet a haiku, oh no!"]
 
 
 def setup_logging(log_dir_root, logfile_suffix):
@@ -40,18 +44,18 @@ def setup_logging(log_dir_root, logfile_suffix):
         raise ValueError("Log directory root {} doesn't "
                          "exist".format(log_dir_root))
 
-    log_dir = log_dir_root + "/guardian_haiku"
+    log_dir = os.path.join(log_dir_root, "guardian_haiku")
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
 
     # Log at DEBUG level to scraper.log.
-    filename = "{log_dir_root}/guardian_haiku/" \
-               "guardian_haiku.{logfile_suffix}.log".format(**locals())
-    logging.basicConfig(filename=filename,
+    filename = "guardian_haiku.{}.log".format(logfile_suffix)
+    logging.basicConfig(filename=os.path.join(log_dir, filename),
                         level=logging.DEBUG,
                         format=Config.LOG_FORMAT,
                         datefmt="%H:%M",
                         filemode='a')
+
     # Log at INFO level to console.
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
@@ -75,7 +79,3 @@ def main(log_dir_root=Config.LOG_DIR_ROOT,
     except Exception as e:
         logger.fatal("guardian_haiku terminated", exc_info=True)
         raise
-
-
-if __name__ == "__main__":
-    print(main())

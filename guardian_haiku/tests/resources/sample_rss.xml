@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Network Front | The Guardian</title>
+    <link>http://www.theguardian.com/uk</link>
+    <description>Latest news, sport, business, comment, analysis and reviews from the Guardian, the world's leading liberal voice</description>
+    <language>en-gb</language>
+    <copyright>Guardian News and Media Limited or its affiliated companies. All rights reserved. 2016</copyright>
+    <pubDate>Sun, 21 Feb 2016 12:11:58 GMT</pubDate>
+    <dc:date>2016-02-21T12:11:58Z</dc:date>
+    <dc:language>en-gb</dc:language>
+    <dc:rights>Guardian News and Media Limited or its affiliated companies. All rights reserved. 2016</dc:rights>
+    <image>
+      <title>The Guardian</title>
+      <url>http://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png</url>
+      <link>http://www.theguardian.com</link>
+    </image>
+    <item>
+      <title>Cameron appeals to Boris Johnson not to join Brexit camp</title>
+      <link>http://www.theguardian.com/politics/2016/feb/21/cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk</link>
+      <description>&lt;p&gt;PM tells London mayor ‘linking arms’ with Nigel Farage and George Galloway on EU referendum would be wrong for UK&lt;/p&gt;&lt;p&gt;&lt;br /&gt;David Cameron has intensified the pressure on Boris Johnson by asking him to avoid “linking arms” with Nigel Farage and George Galloway in backing a British exit from the EU.&lt;/p&gt;&lt;p&gt;As the London mayor prepares to announce his intentions on the EU on Sunday night, the prime minister warned that a UK exit would only offer an “illusion of sovereignty”.&lt;/p&gt; &lt;a href="http://www.theguardian.com/politics/2016/feb/21/cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk"&gt;Continue reading...&lt;/a&gt;</description>
+      <category domain="http://www.theguardian.com/politics/eu-referendum">EU referendum</category>
+      <category domain="http://www.theguardian.com/politics/davidcameron">David Cameron</category>
+      <category domain="http://www.theguardian.com/politics/georgegalloway">George Galloway</category>
+      <category domain="http://www.theguardian.com/politics/boris">Boris Johnson</category>
+      <category domain="http://www.theguardian.com/politics/nigel-farage">Nigel Farage</category>
+      <category domain="http://www.theguardian.com/world/eu">European Union</category>
+      <category domain="http://www.theguardian.com/world/europe-news">Europe</category>
+      <category domain="http://www.theguardian.com/politics/foreignpolicy">Foreign policy</category>
+      <category domain="http://www.theguardian.com/politics/politics">Politics</category>
+      <category domain="http://www.theguardian.com/uk/uk">UK news</category>
+      <category domain="http://www.theguardian.com/world/world">World news</category>
+      <pubDate>Sun, 21 Feb 2016 11:11:54 GMT</pubDate>
+      <guid>http://www.theguardian.com/politics/2016/feb/21/cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk</guid>
+      <dc:creator>Nicholas Watt Chief political correspondent</dc:creator>
+      <dc:date>2016-02-21T11:11:54Z</dc:date>
+    </item>
+  </channel>
+</rss>
+

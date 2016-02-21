@@ -1,7 +1,8 @@
-Fix crap functional test
-Add coverage
-hyphenation bug - fix broken test
+Handle non-200 error codes.
+Finish test_guardian_haiku - fix duplication of monkey_patch.
+hyphenation bug - fix broken test.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]
-Flesh out guardian_haiku so it actually does something.
+Make scraper run irregularly
+
 Add presentation module.
