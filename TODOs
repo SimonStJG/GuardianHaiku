@@ -1,3 +1,5 @@
+Handle encoding issues
+Dictionary
 Finish test_guardian_haiku - fix duplication of monkey_patch.
 hyphenation bug - fix broken test.
 	# Work around hyphenation bug
@@ -6,4 +8,4 @@ Refactor the haiku_finder to be less OO and more functional.
 Type annotations on haiku_finder.
 Make scraper run irregularly to prevent it being automatically blocked.
 Add presentation module.
-Enforce minimum coverage.
+Fix error on install: /usr/bin/python3.5: Error while finding spec for 'setup.py' (<class 'AttributeError'>: module 'setup' has no attribute '__path__')

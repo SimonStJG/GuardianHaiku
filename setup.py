@@ -15,10 +15,9 @@ setup(
         'nltk',
         'typing'
     ],
-    setup_requires=[
-        'pytest-runner',
-    ],
     tests_require=[
-        'pytest',
+        'pytest-runner',
+        'pytest >= 2.8.7',
+        'pytest-cov == 2.2.1'
     ]
 )

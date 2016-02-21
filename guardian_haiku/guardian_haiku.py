@@ -25,14 +25,16 @@ def process_url(guardian_url: str) -> Generator[str, None, None]:
     """Get haiku at URL"""
     logger.info("Processing {}".format(guardian_url))
 
-    paragraphs = extract_full_text(guardian_url)
-    logger.debug("Found full text: {}".format(paragraphs))
-
-    for paragraph in paragraphs:
-        haikus = find_haiku(paragraph)
-        for haiku in haikus:
-            logger.info("Found Haiku: {}".format(haiku))
-            yield haiku
+    try:
+        paragraphs = extract_full_text(guardian_url)
+        logger.debug("Found full text: {}".format(paragraphs))
+        for paragraph in paragraphs:
+            haikus = find_haiku(paragraph)
+            for haiku in haikus:
+                logger.info("Found Haiku: {}".format(haiku))
+                yield haiku
+    except Exception:
+        logger.exception("Failed on article: {}".format(guardian_url))
 
 
 def setup_logging(log_dir_root: str, logfile_suffix: str) -> None:
@@ -75,7 +77,7 @@ def main(log_dir_root: str=Config.LOG_DIR_ROOT,
                 "log_dir_root: {log_dir_root} \n"
                 "logfile_suffix: {logfile_suffix} \n".format(**locals()))
     try:
-        return flatten(process_url(url) for url in get_article_urls(rss_feed_url))
+        return list(flatten(process_url(url) for url in get_article_urls(rss_feed_url)))
     except Exception as e:
         logger.fatal("guardian_haiku terminated", exc_info=True)
         raise
