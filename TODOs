@@ -1,4 +1,3 @@
-Handle non-200 error codes.
 Finish test_guardian_haiku - fix duplication of monkey_patch.
 hyphenation bug - fix broken test.
 	# Work around hyphenation bug

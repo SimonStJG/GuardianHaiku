@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 
 def get_article_urls(rss_feed_url):
     """Get all of the article urls of all articles on the guardian RSS feed."""
-    raw_xml = requests.get(rss_feed_url).text
+    response = requests.get(rss_feed_url)
+    response.raise_for_status()
+    raw_xml = response.text
+
     # Bizarrely, etree.fromstring doesn't actually operate on strings, so we
     # must encode raw_xml, only to immediately decode it afterwards,
     tree = etree.fromstring(raw_xml.encode(encoding="utf-8"),
@@ -25,8 +28,10 @@ def get_article_urls(rss_feed_url):
 
 def extract_full_text(url):
     """Extract the full text from the guardian article at url."""
-    page = requests.get(url)
-    html_tree = html.fromstring(page.text)
+    response = requests.get(url)
+    response.raise_for_status()
+
+    html_tree = html.fromstring(response.text)
     paragraphs = [etree.tostring(paragraph,
                                  method="text",
                                  encoding='unicode').strip()

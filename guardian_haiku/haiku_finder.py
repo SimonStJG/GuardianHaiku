@@ -20,19 +20,15 @@ except LookupError:
 PUNCTUATION = [".", "!", "(", ")", ":", ",", "?", ";", " -"]
 
 
-class HaikuFinder(object):
-    def __init__(self, custom_dictionary=None, unknown_word_callback=None):
-        self.config = {"custom_dictionary": custom_dictionary,
-                       "unknown_word_callback": unknown_word_callback}
-
-    def find_haiku(self, text):
-        """
-        Find a list of Haiku in text.
-        :param text: The text to search
-        :return: List of found haiku
-        """
-        return flatten([Paragraph(paragraph, self.config).find_haiku()
-                        for paragraph in text.split("\n")])
+def find_haiku(text, custom_dictionary=None, unknown_word_callback=None):
+    """
+    Find a list of Haiku in text.
+    :param text: The text to search
+    :return: List of found haiku
+    """
+    return flatten([Paragraph(paragraph, {"custom_dictionary": custom_dictionary,
+                       "unknown_word_callback": unknown_word_callback}).find_haiku()
+                    for paragraph in text.split("\n")])
 
 
 class Paragraph(object):

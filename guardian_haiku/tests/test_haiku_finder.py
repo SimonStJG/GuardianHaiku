@@ -2,7 +2,7 @@
 import logging
 import pytest
 
-from guardian_haiku.haiku_finder import HaikuFinder, Word
+from guardian_haiku.haiku_finder import find_haiku, Word
 
 HAIKU = "Greedy yellow birds. Sing the muddy riverbank. On a window sill."
 HYPHENATED_HAIKU = "Greedy yellow birds - Sing the muddy riverbank. " \
@@ -20,24 +20,24 @@ logger = logging.getLogger(__name__)
 
 
 def test_paragraphs():
-    assert HaikuFinder().find_haiku("{}\n{}".format(HAIKU, HAIKU)) == [HAIKU] * 2
+    assert find_haiku("{}\n{}".format(HAIKU, HAIKU)) == [HAIKU] * 2
 
 
 def test_no_haiku():
-    assert HaikuFinder().find_haiku(SEVEN_SYLLABLE_SENTENCE + UNKNOWN_WORD) == []
+    assert find_haiku(SEVEN_SYLLABLE_SENTENCE + UNKNOWN_WORD) == []
 
 
 def test_finds_haiku():
-    assert HaikuFinder().find_haiku(HAIKU) == [HAIKU]
+    assert find_haiku(HAIKU) == [HAIKU]
 
 
 @pytest.mark.xfail
 def test_finds_hyphenated_haiku():
-    assert HaikuFinder().find_haiku(HYPHENATED_HAIKU) == [HAIKU]
+    assert find_haiku(HYPHENATED_HAIKU) == [HAIKU]
 
 
 def test_finds_three_haikus():
-    found = HaikuFinder().find_haiku(HAIKU + SEVEN_SYLLABLE_SENTENCE + FIVE_SYLLABLE_SENTENCE + UNKNOWN_WORD + HAIKU)
+    found = find_haiku(HAIKU + SEVEN_SYLLABLE_SENTENCE + FIVE_SYLLABLE_SENTENCE + UNKNOWN_WORD + HAIKU)
     assert (found ==
             [HAIKU,
              "On a window sill. " +
@@ -47,15 +47,15 @@ def test_finds_three_haikus():
 
 
 def test_finds_haiku_without_ending_punctuation():
-    assert (HaikuFinder().find_haiku(HAIKU_WITHOUT_ENDING_PUNCTUATION) == [HAIKU_WITHOUT_ENDING_PUNCTUATION])
+    assert find_haiku(HAIKU_WITHOUT_ENDING_PUNCTUATION) == [HAIKU_WITHOUT_ENDING_PUNCTUATION]
 
 
 def test_unknown_word_is_ignored_at_beginning():
-    assert HaikuFinder().find_haiku(UNKNOWN_WORD + HAIKU) == [HAIKU]
+    assert find_haiku(UNKNOWN_WORD + HAIKU) == [HAIKU]
 
 
 def test_unknown_word_is_ignored_at_end():
-    assert HaikuFinder().find_haiku(HAIKU + UNKNOWN_WORD) == [HAIKU]
+    assert find_haiku(HAIKU + UNKNOWN_WORD) == [HAIKU]
 
 
 def test_unknown_word_triggers_callback():
@@ -65,9 +65,7 @@ def test_unknown_word_triggers_callback():
         logger.debug("Captured")
         argument_captor.append(word)
 
-    hf = HaikuFinder(custom_dictionary=None,
-                     unknown_word_callback=callback)
-    hf.find_haiku("unknownword")
+    find_haiku("unknownword", unknown_word_callback=callback)
     assert argument_captor == ["unknownword"]
 
 
