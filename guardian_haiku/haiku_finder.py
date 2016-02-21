@@ -6,8 +6,6 @@ import nltk
 import logging
 from functools import lru_cache
 
-from .utils import flatten
-
 logger = logging.getLogger(__name__)
 
 try:
@@ -26,9 +24,8 @@ def find_haiku(text, custom_dictionary=None, unknown_word_callback=None):
     :param text: The text to search
     :return: List of found haiku
     """
-    return flatten([Paragraph(paragraph, {"custom_dictionary": custom_dictionary,
-                       "unknown_word_callback": unknown_word_callback}).find_haiku()
-                    for paragraph in text.split("\n")])
+    return Paragraph(text, {"custom_dictionary": custom_dictionary,
+                            "unknown_word_callback": unknown_word_callback}).find_haiku()
 
 
 class Paragraph(object):

@@ -55,5 +55,5 @@ def test_logging(monkeypatch, logfile_directory, logfile_suffix):
 
 def test_mainline(monkeypatch, logfile_directory, logfile_suffix):
     monkeypatch.setattr(requests, "get", mock_requests_get)
-    assert main(log_dir_root=logfile_directory,
-                logfile_suffix=logfile_suffix) == ["This is not yet a haiku, oh no!"]
+    assert list(main(log_dir_root=logfile_directory,
+                logfile_suffix=logfile_suffix)) == ["Greedy yellow birds. Sing the muddy riverbank. On a window sill."]

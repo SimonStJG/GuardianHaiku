@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-from functools import reduce
+import collections
 
 
 def flatten(l):
     """I know this isn't pythonic, but I don't care."""
-    return reduce(lambda x, xs: x + xs, l, [])
+    for x in l:
+        if isinstance(x, collections.Iterable) and not isinstance(x, str):
+            yield from flatten(x)
+        else:
+            yield x

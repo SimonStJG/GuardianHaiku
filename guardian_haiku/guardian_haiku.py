@@ -5,6 +5,7 @@ Get haiku from the guardian website
 import datetime
 import logging
 import os
+from guardian_haiku.haiku_finder import find_haiku
 
 from .scraper import extract_full_text, get_article_urls
 from .utils import flatten
@@ -19,18 +20,18 @@ class Config(object):
 logger = logging.getLogger(__name__)
 
 
-def find_haiku(guardian_url):
+def process_url(guardian_url):
     """Get haiku at URL"""
     logger.info("Processing {}".format(guardian_url))
 
-    full_text = extract_full_text(guardian_url)
-    logger.debug("Found full text: {}".format(full_text))
+    paragraphs = extract_full_text(guardian_url)
+    logger.debug("Found full text: {}".format(paragraphs))
 
-    # haiku = HaikuFinder().find_haiku(full_text)
-    # logger.info("Found Haiku: {}".format(haiku))
-
-    # TODO Flesh out this bit!
-    return ["This is not yet a haiku, oh no!"]
+    for paragraph in paragraphs:
+        haikus = find_haiku(paragraph)
+        for haiku in haikus:
+            logger.info("Found Haiku: {}".format(haiku))
+            yield haiku
 
 
 def setup_logging(log_dir_root, logfile_suffix):
@@ -73,9 +74,7 @@ def main(log_dir_root=Config.LOG_DIR_ROOT,
                 "log_dir_root: {log_dir_root} \n"
                 "logfile_suffix: {logfile_suffix} \n".format(**locals()))
     try:
-        haiku = flatten([find_haiku(url)
-                         for url in get_article_urls(rss_feed_url)])
-        return haiku
+        return flatten(process_url(url) for url in get_article_urls(rss_feed_url))
     except Exception as e:
         logger.fatal("guardian_haiku terminated", exc_info=True)
         raise
