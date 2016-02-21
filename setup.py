@@ -12,7 +12,8 @@ setup(
         'lxml',
         'requests',
         'unidecode',
-        'nltk'
+        'nltk',
+        'typing'
     ],
     setup_requires=[
         'pytest-runner',

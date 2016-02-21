@@ -2,6 +2,8 @@ Finish test_guardian_haiku - fix duplication of monkey_patch.
 hyphenation bug - fix broken test.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]
-Make scraper run irregularly
+Refactor the haiku_finder to be less OO and more functional.
+Type annotations on haiku_finder.
+Make scraper run irregularly to prevent it being automatically blocked.
 Add presentation module.
-Enforce minimum coverage
+Enforce minimum coverage.

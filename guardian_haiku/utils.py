@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import collections
+from typing import Iterator, Any
 
 
-def flatten(l):
+def flatten(l: Iterator[Iterator[Any]]) -> Iterator[Any]:
     """I know this isn't pythonic, but I don't care."""
     for x in l:
-        if isinstance(x, collections.Iterable) and not isinstance(x, str):
-            yield from flatten(x)
-        else:
-            yield x
+        yield from x

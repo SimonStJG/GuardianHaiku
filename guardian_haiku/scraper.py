@@ -8,11 +8,12 @@ from __future__ import print_function
 import logging
 from lxml import etree, html
 import requests
+from typing import List
 
 logger = logging.getLogger(__name__)
 
 
-def get_article_urls(rss_feed_url):
+def get_article_urls(rss_feed_url: str) -> List[str]:
     """Get all of the article urls of all articles on the guardian RSS feed."""
     response = requests.get(rss_feed_url)
     response.raise_for_status()
@@ -26,8 +27,8 @@ def get_article_urls(rss_feed_url):
     return [elem.text for elem in tree.xpath('/rss/channel/item/link')]
 
 
-def extract_full_text(url):
-    """Extract the full text from the guardian article at url."""
+def extract_full_text(url: str) -> List[str]:
+    """ Extract the full text from the guardian article at url."""
     response = requests.get(url)
     response.raise_for_status()
 

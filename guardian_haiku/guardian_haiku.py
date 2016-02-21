@@ -5,6 +5,7 @@ Get haiku from the guardian website
 import datetime
 import logging
 import os
+from typing import Generator
 from guardian_haiku.haiku_finder import find_haiku
 
 from .scraper import extract_full_text, get_article_urls
@@ -20,7 +21,7 @@ class Config(object):
 logger = logging.getLogger(__name__)
 
 
-def process_url(guardian_url):
+def process_url(guardian_url: str) -> Generator[str, None, None]:
     """Get haiku at URL"""
     logger.info("Processing {}".format(guardian_url))
 
@@ -34,7 +35,7 @@ def process_url(guardian_url):
             yield haiku
 
 
-def setup_logging(log_dir_root, logfile_suffix):
+def setup_logging(log_dir_root: str, logfile_suffix: str) -> None:
     """
     Setup logging.
 
@@ -65,9 +66,9 @@ def setup_logging(log_dir_root, logfile_suffix):
     logging.getLogger(__name__).addHandler(console)
 
 
-def main(log_dir_root=Config.LOG_DIR_ROOT,
-         logfile_suffix=Config.LOGFILE_SUFFIX,
-         rss_feed_url=Config.DEFAULT_RSS_FEED_URL):
+def main(log_dir_root: str=Config.LOG_DIR_ROOT,
+         logfile_suffix: str=Config.LOGFILE_SUFFIX,
+         rss_feed_url: str=Config.DEFAULT_RSS_FEED_URL) -> str:
     """Entry Point"""
     setup_logging(log_dir_root, logfile_suffix)
     logger.info("guardian_haiku running with \n"
