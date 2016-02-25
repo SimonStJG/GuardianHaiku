@@ -15,37 +15,33 @@ except LookupError:
         raise IOError("Failed to download cmudict")
     cmu_dictionary = nltk.corpus.cmudict.dict()
 
-PUNCTUATION = [".", "!", "(", ")", ":", ",", "?", ";", " -"]
 
-
-def find_haiku(text, custom_dictionary=None, unknown_word_callback=None):
+def find_haiku(text):
     """
     Find a list of Haiku in text.
     :param text: The text to search
     :return: List of found haiku
     """
-    return Paragraph(text, {"custom_dictionary": custom_dictionary,
-                            "unknown_word_callback": unknown_word_callback}).find_haiku()
+    return Paragraph(text).find_haiku()
 
 
 class Paragraph(object):
-    def __init__(self, text, config):
-        self._config = config
+    def __init__(self, text):
         self._clauses = self.split_into_clauses(text)
 
     def split_into_clauses(self, paragraph):
         clauses = []
         next_clause_starting_position = 0
         for i, char in enumerate(paragraph):
-            if char in PUNCTUATION:
+            if not (char.isalpha() or char == ' '):
                 clause = paragraph[next_clause_starting_position:i].strip()
                 if clause:
-                    clauses.append(Clause(clause, char, self._config))
+                    clauses.append(Clause(clause, char))
                 next_clause_starting_position = i + 1
 
         final_clause = paragraph[next_clause_starting_position:].strip()
         if final_clause:
-            clauses.append(Clause(final_clause, '', self._config))
+            clauses.append(Clause(final_clause, ''))
 
         return clauses
 
@@ -65,8 +61,7 @@ class Paragraph(object):
 
 
 class Clause(object):
-    def __init__(self, text, ending_punctuation, config):
-        self._config = config
+    def __init__(self, text, ending_punctuation):
         self._text = text
         self._ending_punctuation = ending_punctuation
 
@@ -74,7 +69,7 @@ class Clause(object):
     @lru_cache()
     def syllables(self):
         try:
-            return sum([Word(word, self._config).syllables
+            return sum([Word(word).syllables
                         for word in self._text.split()])
         except WordNotFoundException:
             return None
@@ -89,13 +84,9 @@ class Clause(object):
 
 
 class Word(object):
-    def __init__(self, text, config=None):
+    def __init__(self, text):
         logger.debug("Creating word: {}".format(text))
         assert text is not None and text != ""
-        self._custom_dictionary = \
-            config.get("custom_dictionary") if config is not None else None
-        self._unknown_word_callback = \
-            config.get("unknown_word_callback") if config is not None else None
         self._text = text
 
     @property
@@ -118,12 +109,7 @@ class Word(object):
                         if is_vowel_sound(syllable)])
 
         except KeyError:
-            if self._custom_dictionary and \
-                    self._text.lower() in self._custom_dictionary:
-                return self._custom_dictionary[self._text.lower()]
-        if self._unknown_word_callback:
-            self._unknown_word_callback(self._text)
-        raise WordNotFoundException
+            raise WordNotFoundException
 
 
 def is_vowel_sound(syllable):

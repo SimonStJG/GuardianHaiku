@@ -58,22 +58,5 @@ def test_unknown_word_is_ignored_at_end():
     assert find_haiku(HAIKU + UNKNOWN_WORD) == [HAIKU]
 
 
-def test_unknown_word_triggers_callback():
-    argument_captor = []
-
-    def callback(word):
-        logger.debug("Captured")
-        argument_captor.append(word)
-
-    find_haiku("unknownword", unknown_word_callback=callback)
-    assert argument_captor == ["unknownword"]
-
-
-def test_custom_dictionary():
-    custom_dictionary = {"customword": 6}
-    word = Word("customword", {"custom_dictionary": custom_dictionary})
-    assert word.syllables == 6
-
-
 def test_hyphenation():
     assert Word("boom-box").syllables == 2

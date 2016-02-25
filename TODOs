@@ -1,10 +1,9 @@
-Handle encoding issues
-Dictionary
+Refactor the haiku_finder to be less OO and more functional.
+Type annotations on haiku_finder.
 hyphenation bug - fix broken test.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]
-Refactor the haiku_finder to be less OO and more functional.
-Type annotations on haiku_finder.
+Add a custom dictionary done in a less crap way than before.
 Make scraper run irregularly to prevent it being automatically blocked.
 Add presentation module.
-Fix error on install: /usr/bin/python3.5: Error while finding spec for 'setup.py' (<class 'AttributeError'>: module 'setup' has no attribute '__path__')
+ - Handle encoding issues - sidestepped for a while.
