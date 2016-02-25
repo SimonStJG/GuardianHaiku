@@ -1,6 +1,7 @@
-Refactor the haiku_finder to be less OO and more functional.
+Get mypy to actually pass so I can add it.
+Do tokeniser better?  Could use a namedtuple on Token?
 Type annotations on haiku_finder.
-hyphenation bug - fix broken test.
+hyphenation bug - fix broken test - could solve with a tokenizer.  Also ' causes problems.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]
 Add a custom dictionary done in a less crap way than before.

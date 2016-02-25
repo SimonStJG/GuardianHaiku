@@ -2,75 +2,61 @@
 """
 Use nltk to find haiku in text.
 """
-import nltk
 import logging
 from functools import lru_cache
+from typing import List
+from guardian_haiku.dictionary import WordNotFoundException, Dictionary
+
 
 logger = logging.getLogger(__name__)
 
-try:
-    cmu_dictionary = nltk.corpus.cmudict.dict()
-except LookupError:
-    if not nltk.download("cmudict"):
-        raise IOError("Failed to download cmudict")
-    cmu_dictionary = nltk.corpus.cmudict.dict()
+
+def find_haiku(paragraph: str,
+               dictionary)-> List[str]:  # TODO SJG Remove default, fix tests
+    clauses = split_into_clauses(paragraph, dictionary)
+    return find_haiku_in_clauses(clauses)
 
 
-def find_haiku(text):
-    """
-    Find a list of Haiku in text.
-    :param text: The text to search
-    :return: List of found haiku
-    """
-    return Paragraph(text).find_haiku()
+def split_into_clauses(paragraph: str, dictionary: Dictionary) -> List[str]:
+    clauses = []
+    next_clause_starting_position = 0
+    for i, char in enumerate(paragraph):
+        if not (char.isalpha() or char == ' '):
+            clause = paragraph[next_clause_starting_position:i].strip()
+            if clause:
+                clauses.append(Clause(clause, char, dictionary))
+            next_clause_starting_position = i + 1
+
+    final_clause = paragraph[next_clause_starting_position:].strip()
+    if final_clause:
+        clauses.append(Clause(final_clause, '', dictionary))
+
+    return clauses
 
 
-class Paragraph(object):
-    def __init__(self, text):
-        self._clauses = self.split_into_clauses(text)
+def find_haiku_in_clauses(clauses):
+    logger.debug("Finding haiku in {}".format(clauses))
+    haiku_found = []
+    syllable_lengths = [x.syllables for x in clauses]
+    for i in range(0, len(clauses) - 2):
+        if syllable_lengths[i:i+3] == [5, 7, 5]:
+            haiku_found.append(" ".join(
+                [x.full_text for x in clauses[i:i+3]]))
 
-    def split_into_clauses(self, paragraph):
-        clauses = []
-        next_clause_starting_position = 0
-        for i, char in enumerate(paragraph):
-            if not (char.isalpha() or char == ' '):
-                clause = paragraph[next_clause_starting_position:i].strip()
-                if clause:
-                    clauses.append(Clause(clause, char))
-                next_clause_starting_position = i + 1
-
-        final_clause = paragraph[next_clause_starting_position:].strip()
-        if final_clause:
-            clauses.append(Clause(final_clause, ''))
-
-        return clauses
-
-    def find_haiku(self):
-        logger.debug("Finding haiku in {}".format(self))
-        haiku_found = []
-        syllable_lengths = [x.syllables for x in self._clauses]
-        for i in range(0, len(self._clauses) - 2):
-            if syllable_lengths[i:i+3] == [5, 7, 5]:
-                haiku_found.append(" ".join(
-                    [x.full_text for x in self._clauses[i:i+3]]))
-
-        return haiku_found
-
-    def __repr__(self):
-        return "Paragraph: ({})".format(", ".join(map(repr, self._clauses)))
+    return haiku_found
 
 
 class Clause(object):
-    def __init__(self, text, ending_punctuation):
+    def __init__(self, text, ending_punctuation, dictionary):
         self._text = text
         self._ending_punctuation = ending_punctuation
+        self._dictionary = dictionary
 
     @property
     @lru_cache()
     def syllables(self):
         try:
-            return sum([Word(word).syllables
-                        for word in self._text.split()])
+            return sum([self._dictionary.syllables(word) for word in self._text.split()])
         except WordNotFoundException:
             return None
 
@@ -81,40 +67,3 @@ class Clause(object):
 
     def __repr__(self):
         return "Clause: {}({})".format(self.full_text, self.syllables)
-
-
-class Word(object):
-    def __init__(self, text):
-        logger.debug("Creating word: {}".format(text))
-        assert text is not None and text != ""
-        self._text = text
-
-    @property
-    @lru_cache()
-    def syllables(self):
-        """Number of syllables in word.
-
-        :raises WordNotFoundException: if the word wasn't found in the
-        dictionary."""
-
-        # If the word is hyphenated then use the sum of the word on each side
-        # of the hyphen
-        if "-" in self._text:
-            return sum([Word(w).syllables for w in self._text.split("-")])
-
-        try:
-            # cmudict actually returns a list of phonetics, so by default
-            # choose first length
-            return len([1 for syllable in cmu_dictionary[self._text.lower()][0]
-                        if is_vowel_sound(syllable)])
-
-        except KeyError:
-            raise WordNotFoundException
-
-
-def is_vowel_sound(syllable):
-    return syllable[-1] in map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
-
-
-class WordNotFoundException(Exception):
-    pass

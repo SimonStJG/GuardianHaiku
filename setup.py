@@ -13,7 +13,8 @@ setup(
         'requests',
         'unidecode',
         'nltk',
-        'typing'
+        'typing',
+        'more-itertools'
     ],
     tests_require=[
         'pytest-runner',

@@ -19,5 +19,5 @@ class TestFunctional(object):
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls(rss_feed_url=Config.DEFAULT_RSS_FEED_URL)
+        urls = get_article_urls(rss_feed_url=Config.rss_feed_url)
         assert len(urls) > 10
