@@ -1,6 +1,5 @@
 Handle encoding issues
 Dictionary
-Finish test_guardian_haiku - fix duplication of monkey_patch.
 hyphenation bug - fix broken test.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]

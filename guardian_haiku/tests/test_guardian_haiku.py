@@ -11,37 +11,7 @@ from guardian_haiku.guardian_haiku import main, Config
 test_resources = os.path.join(os.path.dirname(__file__), "resources")
 
 
-def mock_requests_get(url):
-    """Mock for requests.get"""
-    article_url = "http://www.theguardian.com/politics/2016/feb/21/" \
-                  "cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk"
-    if url == Config.DEFAULT_RSS_FEED_URL:
-        with open(os.path.join(test_resources, "sample_rss.xml")) as f:
-            text = f.read()
-    elif url == article_url:
-        with open(os.path.join(test_resources, "sample_article.html")) as f:
-            text = f.read()
-    else:
-        raise ValueError("Mock Requests can't handle url: {}".format(url))
-
-    mock_response = mock.MagicMock()
-    mock_response.text = text
-    return mock_response
-
-
-@pytest.yield_fixture
-def logfile_directory():
-    with tempfile.TemporaryDirectory() as tmpdir_name:
-        yield tmpdir_name
-
-
-@pytest.fixture
-def logfile_suffix():
-    return "functional_test"
-
-
-def test_logging(monkeypatch, logfile_directory, logfile_suffix):
-    monkeypatch.setattr(requests, "get", mock_requests_get)
+def test_logging(logfile_directory, logfile_suffix):
     main(log_dir_root=logfile_directory,
          logfile_suffix=logfile_suffix)
 
@@ -53,7 +23,39 @@ def test_logging(monkeypatch, logfile_directory, logfile_suffix):
                                                             "log output, but was \n{}".format(first_log_line))
 
 
-def test_mainline(monkeypatch, logfile_directory, logfile_suffix):
-    monkeypatch.setattr(requests, "get", mock_requests_get)
+def test_mainline(logfile_directory, logfile_suffix):
     assert list(main(log_dir_root=logfile_directory,
                 logfile_suffix=logfile_suffix)) == ["Greedy yellow birds. Sing the muddy riverbank. On a window sill."]
+
+
+@pytest.fixture(autouse=True)
+def mock_requests(monkeypatch):
+    """Mock out requests.get"""
+    def mock_requests_get(url):
+        article_url = "http://www.theguardian.com/politics/2016/feb/21/" \
+                      "cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk"
+        if url == Config.DEFAULT_RSS_FEED_URL:
+            with open(os.path.join(test_resources, "sample_rss.xml")) as f:
+                text = f.read()
+        elif url == article_url:
+            with open(os.path.join(test_resources, "sample_article.html")) as f:
+                text = f.read()
+        else:
+            raise ValueError("Mock Requests can't handle url: {}".format(url))
+
+        mock_response = mock.MagicMock()
+        mock_response.text = text
+        return mock_response
+
+    monkeypatch.setattr(requests, "get", mock_requests_get)
+
+
+@pytest.yield_fixture
+def logfile_directory():
+    with tempfile.TemporaryDirectory() as tmpdir_name:
+        yield tmpdir_name
+
+
+@pytest.fixture
+def logfile_suffix():
+    return "functional_test"
