@@ -34,7 +34,7 @@ def mock_requests(monkeypatch):
     def mock_requests_get(url):
         article_url = "http://www.theguardian.com/politics/2016/feb/21/" \
                       "cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk"
-        if url == Config.rss_feed_url:
+        if url == Config.guardian_rss_feed_url:
             with open(os.path.join(test_resources, "sample_rss.xml")) as f:
                 text = f.read()
         elif url == article_url:

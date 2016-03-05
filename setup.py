@@ -14,7 +14,8 @@ setup(
         'unidecode',
         'nltk',
         'typing',
-        'more-itertools'
+        'more-itertools',
+        'tweepy'
     ],
     tests_require=[
         'pytest-runner',

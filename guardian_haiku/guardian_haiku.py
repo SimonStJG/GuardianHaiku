@@ -6,9 +6,8 @@ import datetime
 import logging
 import os
 from typing import Generator, List
-from guardian_haiku.dictionary import Dictionary
-from guardian_haiku.haiku_finder import find_haiku
-
+from .dictionary import Dictionary
+from .haiku_finder import find_haiku
 from .scraper import extract_full_text, get_article_urls
 
 
@@ -16,8 +15,10 @@ class Config(object):
     log_format = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
     log_dir_root = "/var/log/"
     logfile_suffix = datetime.date.today().strftime("%Y-%m-%d")
-    rss_feed_url = "http://www.theguardian.com/uk/rss"
-
+    guardian_rss_feed_url = "http://www.theguardian.com/uk/rss"
+    independent_rss_feed_url = "http://www.independent.co.uk/rss"
+    telegraph_rss_feed_url = "http://www.telegraph.co.uk/rss"
+    mailonline_rss_feed_url = "http://www.dailymail.co.uk/articles.rss"
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +80,7 @@ def setup_logging(log_dir_root: str, logfile_suffix: str) -> None:
 
 def main(log_dir_root: str=Config.log_dir_root,
          logfile_suffix: str=Config.logfile_suffix,
-         rss_feed_url: str=Config.rss_feed_url) -> List[str]:
+         rss_feed_url: str=Config.guardian_rss_feed_url) -> List[str]:
     """Entry Point"""
     setup_logging(log_dir_root, logfile_suffix)
     logger.info("guardian_haiku running with \n"
