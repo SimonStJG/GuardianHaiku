@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-from typing import Generator, Tuple
+from collections import namedtuple
+from typing import Generator
 from more_itertools import peekable
 
+Token = namedtuple("token", ("value", "type"))
 
-def tokenize(paragraph: str) -> Generator[Tuple[str, str], None, None]:
+
+def tokenize(paragraph: str) -> Generator[Token, None, None]:
     x = _tokenize(paragraph)
     # We ignore the first element yielded from _tokenize because it's either ("", "whitespace") or, if there was some
     # other whitespace at the beginning of the string, it'll be that.
@@ -11,7 +14,7 @@ def tokenize(paragraph: str) -> Generator[Tuple[str, str], None, None]:
     yield from x
 
 
-def _tokenize(paragraph: str) -> Generator[Tuple[str, str], None, None]:
+def _tokenize(paragraph: str) -> Generator[Token, None, None]:
     paragraph = peekable(paragraph)
     acc = ""
     acc_type = "whitespace"  # Start from whitespace, because it gives the right results.
@@ -25,7 +28,7 @@ def _tokenize(paragraph: str) -> Generator[Tuple[str, str], None, None]:
             if next_type == "word":  # If it's sandwiched between two chars, it's probably ' or - or similar.
                 acc += char
             else:
-                yield (acc, acc_type)
+                yield Token(acc, acc_type)
                 acc = char
                 acc_type = "punctuation"
             continue
@@ -42,11 +45,11 @@ def _tokenize(paragraph: str) -> Generator[Tuple[str, str], None, None]:
         if char_type == acc_type:
             acc += char
         else:
-            yield (acc, acc_type)
+            yield Token(acc, acc_type)
             acc = char
             acc_type = char_type
 
-    yield (acc, acc_type)
+    yield Token(acc, acc_type)
 
 
 def get_char_type(char: str) -> str:
