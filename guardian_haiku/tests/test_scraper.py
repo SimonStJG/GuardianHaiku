@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
-import pytest
-from guardian_haiku.scraper import extract_full_text, get_article_urls
-from guardian_haiku.guardian_haiku import Config
+
+from guardian_haiku.scraper import guardian_scraper, independent_scraper, telegraph_scraper, mailonline_scraper
 
 
 class TestGuardian(object):
     def test_extract_full_text(self):
         """Extract full text of a known link and check first paragraph"""
-        full_text = extract_full_text("http://www.theguardian.com/"
-                                      "world/2016/feb/13/russia-warns-of-new-"
-                                      "cold-war-amid-syria-accusations-munich")
+        full_text = guardian_scraper.extract_full_text("http://www.theguardian.com/world/2016/feb/13/russia-warns-of-"
+                                                       "new-cold-war-amid-syria-accusations-munich")
         assert (full_text[0] ==
                 "The Russian prime minister has said the world is slipping "
                 "into a \u201cnew cold war\u201d after European leaders condemned "
@@ -18,52 +16,54 @@ class TestGuardian(object):
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls(rss_feed_url=Config.guardian_rss_feed_url)
+        urls = guardian_scraper.get_article_urls()
         assert len(urls) > 10
 
 
 class TestIndependent(object):
     def test_extract_full_text(self):
         """Extract full text of a known link and check first paragraph"""
-        full_text = extract_full_text("http://www.independent.co.uk/news/uk/crime/two-arrested-after-stolen-fire-"
-                                      "engine-crashed-into-cars-and-homes-a6914071.html")
+        full_text = independent_scraper.extract_full_text("http://www.independent.co.uk/news/uk/crime/two-arrested-"
+                                                          "after-stolen-fire-engine-crashed-into-cars-and-homes-"
+                                                          "a6914071.html")
         assert (full_text[0] ==
                 "A pensioner and a teenager have been arrested after a fire engine was stolen from a fire station and "
                 "crashed into nearby cars and houses.")
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls(rss_feed_url=Config.independent_rss_feed_url)
+        urls = independent_scraper.get_article_urls()
         assert len(urls) > 10
 
 
 class TestTelegraph(object):
-    @pytest.mark.xfail
     def test_extract_full_text(self):
         """Extract full text of a known link and check first paragraph"""
-        full_text = extract_full_text("http://www.telegraph.co.uk/culture/film/oscars/12177476/Oscars-2016-academy-"
-                                      "award-winners-list-leonardo-dicaprio.html")
+        full_text = telegraph_scraper.extract_full_text("http://www.telegraph.co.uk/news/uknews/law-and-order/12184708/"
+                                                        "Britains-cold-call-king-young-tech-geek-who-lives-with-"
+                                                        "his-mother.html")
         assert (full_text[0] ==
-                "A pensioner and a teenager have been arrested after a fire engine was stolen from a fire station and "
-                "crashed into nearby cars and houses.")
+                "He calls himself “moosey_man” on dating websites and describes himself as a “hopeless romantic”, who "
+                "enjoys playing the guitar and the occasional game of tennis. Louis Kidd, a 27-year-old who still "
+                "lives at home with his mother, may seem harmless enough.")
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls(rss_feed_url=Config.telegraph_rss_feed_url)
+        urls = telegraph_scraper.get_article_urls()
         assert len(urls) > 10
 
 
 class TestMailOnline(object):
-    @pytest.mark.xfail
     def test_extract_full_text(self):
         """Extract full text of a known link and check first paragraph"""
-        full_text = extract_full_text("http://www.dailymail.co.uk/wires/pa/article-3477877/Fire-engine-stolen-"
-                                      "station-driven-cars-houses.html?ITO=1490&ns_mchannel=rss&ns_campaign=1490")
+        full_text = mailonline_scraper.extract_full_text("http://www.dailymail.co.uk/news/article-3478947/The-EU-"
+                                                         "fuelling-Hitler-worshippers-bad-national-security-"
+                                                         "Michael-Gove-claims-new-escalation-Brexit-battle.html")
         assert (full_text[0] ==
-                "A pensioner and a teenager have been arrested after a fire engine was stolen from a fire station and "
-                "crashed into nearby cars and houses.")
+                "The EU has fuelled the far right so it is stronger than at any time Hitler's rise to power in the "
+                "1930s, Michael Gove warned today.")
 
     def test_get_article_urls(self):
         """Check something is returned by get_article_urls"""
-        urls = get_article_urls(rss_feed_url=Config.mailonline_rss_feed_url)
+        urls = mailonline_scraper.get_article_urls()
         assert len(urls) > 10

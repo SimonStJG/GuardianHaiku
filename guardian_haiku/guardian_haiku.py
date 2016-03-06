@@ -8,17 +8,13 @@ import os
 from typing import Generator, List
 from .dictionary import Dictionary
 from .haiku_finder import find_haiku
-from .scraper import extract_full_text, get_article_urls
+from .scraper import guardian_scraper
 
 
 class Config(object):
     log_format = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
     log_dir_root = "/var/log/"
     logfile_suffix = datetime.date.today().strftime("%Y-%m-%d")
-    guardian_rss_feed_url = "http://www.theguardian.com/uk/rss"
-    independent_rss_feed_url = "http://www.independent.co.uk/rss"
-    telegraph_rss_feed_url = "http://www.telegraph.co.uk/rss"
-    mailonline_rss_feed_url = "http://www.dailymail.co.uk/articles.rss"
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +25,7 @@ def process_url(guardian_url: str,
     logger.info("Processing {}".format(guardian_url))
 
     try:
-        paragraphs = extract_full_text(guardian_url)
+        paragraphs = guardian_scraper.extract_full_text(guardian_url)
         logger.debug("Found full text: {}".format(paragraphs))
         for paragraph in paragraphs:
             haikus = find_haiku(paragraph, dictionary)
@@ -40,10 +36,9 @@ def process_url(guardian_url: str,
         logger.exception("Failed on article: {}".format(guardian_url))
 
 
-def process_rss_feed(rss_feed_url: str,
-                     dictionary: Dictionary) -> Generator[str, None, None]:
-    logger.info("Processing RSS Feed: {}".format(rss_feed_url))
-    for url in get_article_urls(rss_feed_url):
+def process_rss_feed(dictionary: Dictionary) -> Generator[str, None, None]:
+    logger.info("Processing RSS Feed")
+    for url in guardian_scraper.get_article_urls():
         yield from process_url(url, dictionary)
 
 
@@ -79,8 +74,7 @@ def setup_logging(log_dir_root: str, logfile_suffix: str) -> None:
 
 
 def main(log_dir_root: str=Config.log_dir_root,
-         logfile_suffix: str=Config.logfile_suffix,
-         rss_feed_url: str=Config.guardian_rss_feed_url) -> List[str]:
+         logfile_suffix: str=Config.logfile_suffix) -> List[str]:
     """Entry Point"""
     setup_logging(log_dir_root, logfile_suffix)
     logger.info("guardian_haiku running with \n"
@@ -88,7 +82,7 @@ def main(log_dir_root: str=Config.log_dir_root,
                 "logfile_suffix: {logfile_suffix} \n".format(**locals()))
     dictionary = Dictionary()
     try:
-        result = list(process_rss_feed(rss_feed_url, dictionary))
+        result = list(process_rss_feed(dictionary))
         print(dictionary.unknown_words)  # TODO remove
         return result
     except Exception as e:
