@@ -2,19 +2,19 @@
 """
 The Haiku Finder algorithm:
 
-Double? pass over tokens created from tokenizer...
+Single pass over tokens created from tokenizer...
 TODO Complete this description
-
 """
-from typing import List
+from typing import List, Tuple, Generator
 
-from .dictionary import WordNotFoundException
+from .dictionary import WordNotFoundException, Dictionary
 from .tokenizer import Token
 
 
-def find_haiku(dictionary, tokens):
+def assign_syllables(dictionary: Dictionary,
+                     tokens: List[Token]) -> Generator[Tuple[Token, int], None, None]:
 
-    def assign_syllable(token: Token):
+    def assign_syllable(token: Token) -> Tuple[Token, int]:
         if token.type == "word":
             # If you throw in a generator, it exits.
             # TODO Should rewrite without the raise for speed.
@@ -25,8 +25,22 @@ def find_haiku(dictionary, tokens):
         else:
             return token, None
 
-    def assign_syllables(tokens: List[Token]):
-        for token in tokens:
-            yield assign_syllable(token)
+    for token in tokens:
+        yield assign_syllable(token)
 
-    return assign_syllables(tokens)
+
+def find_haiku(dictionary: Dictionary, tokens: List[Token]) -> List[str]:
+
+    def valid(p):
+        pass
+
+    def process(possibilities, token):
+        for p in possibilities:
+            p.append(token)
+            if valid(p):
+                yield p
+
+    possibilities = []
+    for token in tokens:
+        # Completely ignore whitespace
+        possibilities = list(process(possibilities, token))

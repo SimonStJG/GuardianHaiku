@@ -36,14 +36,14 @@ def extract_full_text(url: str, paragraph_xpath: str) -> List[str]:
             for paragraph in html_tree.xpath(paragraph_xpath)]
 
 
-scraper_type = namedtuple("scraper", ("name", "get_article_urls", "extract_full_text"))
+Scraper = namedtuple("scraper", ("name", "get_article_urls", "extract_full_text"))
 scrapers = []
 
 
-def scraper(name: str, rss_feed_url: str, rss_xpath: str, paragraph_xpath: str) -> scraper_type:
-    s = scraper_type(name,
-                     lambda: get_article_urls(rss_feed_url, rss_xpath),
-                     lambda url: extract_full_text(url, paragraph_xpath))
+def scraper(name: str, rss_feed_url: str, rss_xpath: str, paragraph_xpath: str) -> Scraper:
+    s = Scraper(name,
+                lambda: get_article_urls(rss_feed_url, rss_xpath),
+                lambda url: extract_full_text(url, paragraph_xpath))
     scrapers.append(s)
     return s
 

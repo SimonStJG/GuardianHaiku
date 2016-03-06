@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from collections import namedtuple
-from typing import Generator
+from typing import Generator, NamedTuple
 from more_itertools import peekable
 
-Token = namedtuple("token", ("value", "type"))
+Token = NamedTuple("token", (("value", str), ("type", str)))
 
 
 def tokenize(paragraph: str) -> Generator[Token, None, None]:

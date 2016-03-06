@@ -8,7 +8,7 @@ import os
 from typing import Generator, List
 from .dictionary import Dictionary
 from .haiku_finder import find_haiku
-from .scraper import guardian_scraper
+from .scraper import guardian_scraper, Scraper
 
 
 class Config(object):
@@ -20,12 +20,13 @@ logger = logging.getLogger(__name__)
 
 
 def process_url(guardian_url: str,
-                dictionary: Dictionary) -> Generator[str, None, None]:
+                dictionary: Dictionary,
+                scraper: Scraper) -> Generator[str, None, None]:
     """Get haiku at URL"""
     logger.info("Processing {}".format(guardian_url))
 
     try:
-        paragraphs = guardian_scraper.extract_full_text(guardian_url)
+        paragraphs = scraper.extract_full_text(guardian_url)
         logger.debug("Found full text: {}".format(paragraphs))
         for paragraph in paragraphs:
             haikus = find_haiku(paragraph, dictionary)
@@ -36,10 +37,11 @@ def process_url(guardian_url: str,
         logger.exception("Failed on article: {}".format(guardian_url))
 
 
-def process_rss_feed(dictionary: Dictionary) -> Generator[str, None, None]:
+def process_rss_feed(dictionary: Dictionary,
+                     scraper: Scraper) -> Generator[str, None, None]:
     logger.info("Processing RSS Feed")
-    for url in guardian_scraper.get_article_urls():
-        yield from process_url(url, dictionary)
+    for url in scraper.get_article_urls():
+        yield from process_url(url, dictionary, scraper)
 
 
 def setup_logging(log_dir_root: str, logfile_suffix: str) -> None:
@@ -82,7 +84,8 @@ def main(log_dir_root: str=Config.log_dir_root,
                 "logfile_suffix: {logfile_suffix} \n".format(**locals()))
     dictionary = Dictionary()
     try:
-        result = list(process_rss_feed(dictionary))
+        scraper = guardian_scraper
+        result = list(process_rss_feed(dictionary, scraper))
         print(dictionary.unknown_words)  # TODO remove
         return result
     except Exception as e:

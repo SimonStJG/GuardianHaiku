@@ -2,7 +2,7 @@
 import pytest
 from guardian_haiku.dictionary import Dictionary, WordNotFoundException
 
-from guardian_haiku.haiku_finder_t import find_haiku
+from guardian_haiku.haiku_finder_t import assign_syllables
 from guardian_haiku.tokenizer import Token
 
 HAIKU = "Greedy yellow birds. Sing the muddy riverbank. On a window sill."
@@ -23,12 +23,13 @@ def dictionary():
 
 
 def test_assign_syllables(dictionary):
-    assert list(find_haiku(dictionary, [Token("word", "word")])) == [(Token("word", "word"), 1)]
+    assert list(assign_syllables(dictionary, [Token("word", "word")])) == [(Token("word", "word"), 1)]
 
 
 def test_assign_syllables_for_word_not_found(dictionary):
-    assert list(find_haiku(dictionary, [Token("word", "word"),
-                                        Token(" ", "whitespace"),
-                                        Token("sdlh", "word")])) == [(Token("word", "word"), 1),
-                                                                     (Token(" ", "whitespace"), None),
-                                                                     (Token("sdlh", "word"), WordNotFoundException)]
+    assert list(assign_syllables(dictionary, [Token("word", "word"),
+                                              Token(" ", "whitespace"),
+                                              Token("sdlh", "word")])) == [(Token("word", "word"), 1),
+                                                                           (Token(" ", "whitespace"), None),
+                                                                           (Token("sdlh", "word"),
+                                                                            WordNotFoundException)]
