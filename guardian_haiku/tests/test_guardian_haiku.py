@@ -12,8 +12,7 @@ test_resources = os.path.join(os.path.dirname(__file__), "resources")
 
 
 def test_logging(logfile_directory, logfile_suffix):
-    main(log_dir_root=logfile_directory,
-         logfile_suffix=logfile_suffix)
+    list(main(log_dir_root=logfile_directory, logfile_suffix=logfile_suffix))
 
     with open("{logfile_directory}/guardian_haiku/guardian_haiku."
               "{logfile_suffix}.log".format(logfile_directory=logfile_directory,
@@ -24,8 +23,8 @@ def test_logging(logfile_directory, logfile_suffix):
 
 
 def test_mainline(logfile_directory, logfile_suffix):
-    assert list(main(log_dir_root=logfile_directory,
-                logfile_suffix=logfile_suffix)) == ["Greedy yellow birds. Sing the muddy riverbank. On a window sill."]
+    result = list(main(log_dir_root=logfile_directory, logfile_suffix=logfile_suffix))
+    assert result == [("Guardian", ["Greedy yellow birds. Sing the muddy riverbank. On a window sill."])]
 
 
 @pytest.fixture(autouse=True)
@@ -34,7 +33,7 @@ def mock_requests(monkeypatch):
     def mock_requests_get(url):
         article_url = "http://www.theguardian.com/politics/2016/feb/21/" \
                       "cameron-boris-johnson-brexit-nigel-farage-george-galloway-uk"
-        if "rss" in url:
+        if "theguardian" in url and "rss" in url:
             with open(os.path.join(test_resources, "sample_rss.xml")) as f:
                 text = f.read()
         elif url == article_url:

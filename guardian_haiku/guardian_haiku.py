@@ -8,7 +8,7 @@ import os
 from typing import Generator, List
 from .dictionary import Dictionary
 from .haiku_finder import find_haiku
-from .scraper import guardian_scraper, Scraper
+from .scraper import Scraper, scrapers
 
 
 class Config(object):
@@ -83,11 +83,12 @@ def main(log_dir_root: str=Config.log_dir_root,
                 "log_dir_root: {log_dir_root} \n"
                 "logfile_suffix: {logfile_suffix} \n".format(**locals()))
     dictionary = Dictionary()
-    try:
-        scraper = guardian_scraper
-        result = list(process_rss_feed(dictionary, scraper))
-        print(dictionary.unknown_words)  # TODO remove
-        return result
-    except Exception as e:
-        logger.fatal("guardian_haiku terminated", exc_info=True)
-        raise
+
+    for scraper in scrapers:
+        try:
+            logger.info("Using content scraper: {}".format(scraper.name))
+            result = list(process_rss_feed(dictionary, scraper))
+            print(dictionary.unknown_words)  # TODO Do something useful with this.
+            yield scraper.name, result
+        except Exception as e:
+            logger.error("Failed to use content scraper {}".format(scraper.name), exc_info=True)

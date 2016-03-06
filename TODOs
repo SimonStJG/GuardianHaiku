@@ -1,11 +1,12 @@
-Do tokeniser better
-Connect up the new scrapers
-Get mypy to actually pass so I can add it.
-Type annotations on haiku_finder.
-hyphenation bug - fix broken test - could solve with a tokenizer.  Also ' causes problems.
+0. Everything except the guardian is broken
+1. Functional tests should support more than just the guardian
+2. Do tokeniser better
+3. Get mypy to actually pass so I can add it.
+4. Type annotations everywhere
+5. hyphenation bug - fix broken test - could solve with a tokenizer.  Also ' causes problems.
 	# Work around hyphenation bug
 	text = [paragraph.replace("-", ",") for paragraph in text]
-Add a custom dictionary done in a less crap way than before.
-Make scraper run irregularly to prevent it being automatically blocked.
-Add presentation module.
+6. Add a custom dictionary done in a less crap way than before.
+7. Make scraper run irregularly to prevent it being automatically blocked.
+8. Add presentation module.
  - Handle encoding issues - sidestepped for a while.
