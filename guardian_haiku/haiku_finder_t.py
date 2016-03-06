@@ -8,6 +8,7 @@ TODO Complete this description
 """
 from typing import List
 
+from .dictionary import WordNotFoundException
 from .tokenizer import Token
 
 
@@ -15,7 +16,12 @@ def find_haiku(dictionary, tokens):
 
     def assign_syllable(token: Token):
         if token.type == "word":
-            return token, dictionary.syllables(token.value)
+            # If you throw in a generator, it exits.
+            # TODO Should rewrite without the raise for speed.
+            try:
+                return token, dictionary.syllables(token.value)
+            except WordNotFoundException:
+                return token, WordNotFoundException
         else:
             return token, None
 
