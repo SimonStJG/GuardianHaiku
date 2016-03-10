@@ -1,0 +1,48 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+  <channel>
+    <atom:link href="http://www.dailymail.co.uk/home/index.html" rel="self" type="application/rss+xml"/>
+    <title> Articles | Mail Online</title>
+    <link>http://www.dailymail.co.uk/home/index.html?ITO=1490&amp;ns_mchannel=rss&amp;ns_campaign=1490</link>
+    <description>
+      MailOnline - all the latest news, sport, showbiz, science and health stories from around the world from the Daily Mail and Mail on Sunday newspapers
+    </description>
+    <language>en-gb</language>
+    <copyright>Copyright 2016 Associated Newspapers Ltd</copyright>
+    <pubDate>Thu, 10 Mar 2016 21:13:51 +0000</pubDate>
+    <lastBuildDate>Thu, 10 Mar 2016 21:13:51 +0000</lastBuildDate>
+    <managingEditor>editorial@mailonline.co.uk (Editor)</managingEditor>
+    <category>Home</category>
+    <category domain="dmoz">
+      Regional/Europe/United_Kingdom/News_and_Media/Newspapers
+    </category>
+    <image>
+      <title> Articles | Mail Online</title>
+      <url>
+	http://i.dailymail.co.uk/i/furniture/mastHead_1_rss.png
+      </url>
+      <link>
+	http://www.dailymail.co.uk/home/index.html?ITO=1490&amp;ns_mchannel=rss&amp;ns_campaign=1490
+      </link>
+    </image>
+    <item>
+      <title>
+	Senate shoots down resolution to block F-16 sale to Pakistan
+      </title>
+      <link>
+	http://www.dailymail.co.uk/wires/ap/article-3486401/Senate-shoots-resolution-against-F-16-sale-Pakistan.html?ITO=1490&amp;ns_mchannel=rss&amp;ns_campaign=1490
+      </link>
+      <description>
+	WASHINGTON (AP) — The Senate killed a measure to block the sale of F-16 fighter jets to Pakistan as opponents of the $700 million deal insisted no U.S. tax d...
+      </description>
+      <enclosure url="http://i.dailymail.co.uk/i/pix/m_logo_154x115px.png" type="image/jpeg" length="3259"/>
+      <pubDate>Thu, 10 Mar 2016 21:13:43 +0000</pubDate>
+      <guid>
+	http://www.dailymail.co.uk/wires/ap/article-3486401/Senate-shoots-resolution-against-F-16-sale-Pakistan.html?ITO=1490&amp;ns_mchannel=rss&amp;ns_campaign=1490
+      </guid>
+      <media:description>MailOnline logo</media:description>
+      <media:thumbnail url="http://i.dailymail.co.uk/i/pix/m_logo_154x115px.png" width="154" height="115"/>
+      <media:credit scheme="urn:ebu">Associated Press Photo</media:credit>
+      <media:content type="image/jpeg" url="http://i.dailymail.co.uk/i/pix/m_logo_154x115px.png"/>
+    </item>
+  </channel>
+</rss>

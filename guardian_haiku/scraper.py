@@ -52,7 +52,7 @@ guardian_scraper = scraper(name="Guardian",
                            rss_xpath='/rss/channel/item/link',
                            paragraph_xpath=r'//div[@itemprop="articleBody"]/p')
 
-independent_scraper = scraper(name="Indepedent",
+independent_scraper = scraper(name="Independent",
                               rss_feed_url="http://www.independent.co.uk/rss",
                               rss_xpath='/rss/channel/item/link',
                               paragraph_xpath=r'//div[@itemprop="articleBody"]/p')

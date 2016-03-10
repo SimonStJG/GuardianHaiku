@@ -89,6 +89,7 @@ def main(log_dir_root: str=Config.log_dir_root,
             logger.info("Using content scraper: {}".format(scraper.name))
             result = list(process_rss_feed(dictionary, scraper))
             print(dictionary.unknown_words)  # TODO Do something useful with this.
-            yield scraper.name, result
+            if result:
+                yield scraper.name, result
         except Exception as e:
             logger.error("Failed to use content scraper {}".format(scraper.name), exc_info=True)

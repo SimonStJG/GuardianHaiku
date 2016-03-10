@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" >
+<channel>
+<title>The Independent</title>
+<link>http://www.independent.co.uk/rss</link>
+<description>The Independent Feed</description>
+<atom:link rel="hub" href="http://www.independent.co.uk/pubsubhubbub/endpoint" />
+<atom:link rel="self" href="http://www.independent.co.uk/rss" />
+<item>
+  <title>Two years after the disappearance of Malaysia Airlines jet MH370 and still no answer for grieving families</title>
+  <link>http://www.independent.co.uk/news/world/asia/mh370-two-years-after-the-disappearance-of-malaysia-airlines-jet-and-still-no-answer-for-grieving-a6915756.html</link>
+  <description><![CDATA[For the families of those on board missing flight MH370, answers are still required. Eileen Ng in Kuala Lumpur and Kristen Gelineau in Sydney report on the extraordinary underwater search for the vanished Boeing 777]]></description>
+  <pubDate>Sun, 06 Mar 2016 18:58:54 +0000</pubDate>
+  <guid>a6915756</guid>
+  <author>Eileen Ng, KRISTEN GELINEAU</author>
+  <dc:creator>Eileen Ng, KRISTEN GELINEAU</dc:creator>
+  <dc:date>2016-03-06T18:58:54+00:00</dc:date>
+  <media:thumbnail url="http://static.independent.co.uk/s3fs-public/styles/feed/public/thumbnails/image/2016/03/06/18/23-Malaysia-Airlines-EPA.jpg" type="image/jpeg"/>
+  <media:content url="http://static.independent.co.uk/s3fs-public/thumbnails/image/2016/03/06/18/23-Malaysia-Airlines-EPA.jpg" type="image/jpeg"/>
+  <media:text>A woman writes messages for the passengers of flight MH370 on a banner during a remembrance ceremony to mark the second anniversary of the plane&apos;s disappearance in Kuala Lumpur  (Picture: [copyright])</media:text>
+</item>
+</channel>
+</rss>
