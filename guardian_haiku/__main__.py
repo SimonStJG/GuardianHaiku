@@ -2,7 +2,7 @@
 """
 Get haiku from the guardian website.
 """
-from guardian_haiku import guardian_haiku
+from guardian_haiku import poet
 
 if __name__ == "__main__":
-    print(list(guardian_haiku.main()))
+    print(list(poet.main()))

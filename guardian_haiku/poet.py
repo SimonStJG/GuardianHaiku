@@ -7,7 +7,6 @@ import logging
 import os
 from typing import Generator, List
 from .dictionary import Dictionary
-from .haiku_finder import find_haiku
 from .scraper import Scraper, scrapers
 
 
@@ -28,11 +27,7 @@ def process_url(guardian_url: str,
     try:
         paragraphs = scraper.extract_full_text(guardian_url)
         logger.debug("Found full text: {}".format(paragraphs))
-        for paragraph in paragraphs:
-            haikus = find_haiku(paragraph, dictionary)
-            for haiku in haikus:
-                logger.info("Found Haiku: {}".format(haiku))
-                yield haiku
+        # TODO yield some strings here
     except Exception:
         logger.exception("Failed on article: {}".format(guardian_url))
 

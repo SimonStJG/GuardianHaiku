@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
+from itertools import islice
+
 from typing import Generator, NamedTuple
 from more_itertools import peekable
 
-Token = NamedTuple("token", (("value", str), ("type", str)))
 
-
-def tokenize(paragraph: str) -> Generator[Token, None, None]:
-    x = _tokenize(paragraph)
-    # We ignore the first element yielded from _tokenize because it's either ("", "whitespace") or, if there was some
-    # other whitespace at the beginning of the string, it'll be that.
-    next(x)
-    yield from x
+Token = NamedTuple("Token", (("value", str), ("type", str)))
 
 
 def _tokenize(paragraph: str) -> Generator[Token, None, None]:
@@ -63,5 +58,7 @@ def get_char_type(char: str) -> str:
         return "punctuation"
 
 
-class ParseError(Exception):
-    pass
+def tokenize(paragraph: str) -> Generator[Token, None, None]:
+    # We ignore the first element yielded from _tokenize because it's either ("", "whitespace") or, if there was some
+    # other whitespace at the beginning of the string, it'll be that.
+    yield from islice(_tokenize(paragraph), 1, None)

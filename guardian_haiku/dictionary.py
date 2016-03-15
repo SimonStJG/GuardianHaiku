@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 import nltk
 
@@ -28,7 +29,7 @@ class Dictionary(object):
                 return s
             except KeyError:
                 self.unknown_words.append(word)
-                raise WordNotFoundException()
+                return None
 
     def syllables_from_cmudict(self, word: str) -> int:
         # cmudict actually returns a list of phonetics, so by default
@@ -39,7 +40,3 @@ class Dictionary(object):
 
 def is_vowel_sound(syllable):
     return syllable[-1] in map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
-
-
-class WordNotFoundException(Exception):
-    pass
